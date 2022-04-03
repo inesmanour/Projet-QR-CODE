@@ -46,6 +46,69 @@ def carre_de_base():
     pixels = [[0,0,0,0,0,0,0,1], [0,1,1,1,1,1,0,1], [0,1,0,0,0,1,0,1], [0,1,0,0,0,1,0,1], [0,1,0,0,0,1,0,1], [0,1,1,1,1,1,0,1], [0,0,0,0,0,0,0,1], [1,1,1,1,1,1,1,1]]
     return pixels
 
+def qr_code_de_base():
+    "matrice de pixels 25 sur 25 originel avec les 4 coins bien placés et les 2 lignes qui relient les coins "
+    qr_code= [[0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0],
+          [0,1,1,1,1,1,0, 1,1,1,1,1,1,1,1,1,1,1, 0,1,1,1,1,1,0],
+          [0,1,0,0,0,1,0, 1,1,1,1,1,1,1,1,1,1,1, 0,1,0,0,0,1,0],
+          [0,1,0,0,0,1,0, 1,1,1,1,1,1,1,1,1,1,1, 0,1,0,0,0,1,0],
+          [0,1,0,0,0,1,0, 1,1,1,1,1,1,1,1,1,1,1, 0,1,0,0,0,1,0],
+          [0,1,1,1,1,1,0, 1,1,1,1,1,1,1,1,1,1,1, 0,1,1,1,1,1,0],
+          [0,0,0,0,0,0,0, 1,0,1,0,1,0,1,0,1,0,1, 0,0,0,0,0,0,0],
+
+          [1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1],
+          [1,1,1,1,1,1,0, 1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1],
+          [1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1],
+          [1,1,1,1,1,1,0, 1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1],
+          [1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1],
+          [1,1,1,1,1,1,0, 1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1],
+          [1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1],
+          [1,1,1,1,1,1,0, 1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1],
+          [1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1],
+          [1,1,1,1,1,1,0, 1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1],
+          [1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1],
+
+          [0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1],
+          [0,1,1,1,1,1,0, 1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1],
+          [0,1,0,0,0,1,0, 1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1],
+          [0,1,0,0,0,1,0, 1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1],
+          [0,1,0,0,0,1,0, 1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1],
+          [0,1,1,1,1,1,0, 1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1],
+          [0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1]]
+
+   
+def test_image():
+    " test de l'image  pour voir s'il correspond bien au qr code de base "
+
+              
+# if l'image toload( dans le cas ou les coins ne st pas a leur place)correspond qr code de base rien faire 
+# else : changer les coordonnes des coins pour les avoir bien place = deplacer par rotation
+# pour cela placer un compteur :au maximum yaura 3 rotation psq dans le cas ou il ressemble pas a celui de base on l'arrete qd mm a 3
+#on doit changer les 8 premieres col et lignes de chaque coins , le reste que des 1 =white pas besoin de chnagements
+#on sait que ya 4 possibilité de coins vides donc 4 conditions de rotation avec un 
+#
+#  faire translation vers la droite 
+#mettre un tampon du qr load quon va tester pour prendre les partie quon veut puisq lors de la rotation les coins auront plus leurs dernire bande blanche allant vers l'interieur ##
+
+# exemple 
+def translate():
+    #i = nb ligne
+    #j= nb colonne
+
+    debut
+    #tampon = qr_tester
+    #change la valeur  de i pour aller directement sur les valeurs de i voulues !
+    for i in range(x):
+        # change la valeur  de j pour aller directement sur les valeurs de j voulues !
+        for j in range (y):
+            #change les valeurs de liste en i et j voulue !
+            l[i][j]= # un truc
+    condition tester si qr_testter== qr_base
+
+
+
+
+    
 def trouver_carre():
     """Fonction qui trouve le coin dans lequel le carre_de_base n'apparait 
     pas et retourne l'image pour avoir les 3 carrés dans les bons coins"""
