@@ -32,18 +32,24 @@ def loading(filename):
     """Fonction qui charge le fichier image filename et renvoie une 
     matrice de 0 et de 1 qui représente l'image en noir et blanc"""
     global mat
-    toLoad=pil.Image.open(filename)
+    toLoad=pil.Image.open("test_coin.png")
     mat=[[0]*toLoad.size[0] for k in range(toLoad.size[1])]
     for i in range(toLoad.size[1]):
         for j in range(toLoad.size[0]):
             mat[i][j]= 0 if toLoad.getpixel((j,i)) == 0 else 1
     return mat
 
+def rotate_gauche():
+    global mat
+    mat_res = [[0, 0, 0, 0] * nbrLig(mat) for i in range (nbrCol(mat))]
+    for i in range (nbrLig(mat_res)):
+        for j in range (nbrCol(mat_res)):
+            mat_res [i][j] = mat [i][nbrCol(mat)-1-i]
 
 def carre_de_base():
     """Matrice de pixels qui crée un carré noir de 3x3 pixels enrouré d'une bande 
     blanche entourée d'une bande noire entourée d'une bande blanche à droite et en bas"""
-
+    global coin_H_G, coin_B_G, coin_H_D
     coin_H_G = [[0,0,0,0,0,0,0,1],
                 [0,1,1,1,1,1,0,1],
                 [0,1,0,0,0,1,0,1],
@@ -81,8 +87,8 @@ def trouver_carre():
     global mat
     for i in range (18, 25):
         for j in range (18, 25):
-            while matrice [i][j] == coin_H_G or matrice [i][j] == coin_H_D or matrice [i][j] == coin_B_G:
-                rotate_gauche(filename)
+            while mat [i][j] == coin_H_G or mat [i][j] == coin_H_D or mat [i][j] == coin_B_G:
+                rotate_gauche("test_coin.png")
 
 def trouver_lignes():
     """Fonction qui vérifie que les 2 lignes qui relient
