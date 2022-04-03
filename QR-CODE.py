@@ -31,6 +31,7 @@ def saving(matPix, filename):
 def loading(filename):
     """Fonction qui charge le fichier image filename et renvoie une 
     matrice de 0 et de 1 qui représente l'image en noir et blanc"""
+    global mat
     toLoad=pil.Image.open(filename)
     mat=[[0]*toLoad.size[0] for k in range(toLoad.size[1])]
     for i in range(toLoad.size[1]):
@@ -43,13 +44,45 @@ def carre_de_base():
     """Matrice de pixels qui crée un carré noir de 3x3 pixels enrouré d'une bande 
     blanche entourée d'une bande noire entourée d'une bande blanche à droite et en bas"""
 
-    pixels = [[0,0,0,0,0,0,0,1], [0,1,1,1,1,1,0,1], [0,1,0,0,0,1,0,1], [0,1,0,0,0,1,0,1], [0,1,0,0,0,1,0,1], [0,1,1,1,1,1,0,1], [0,0,0,0,0,0,0,1], [1,1,1,1,1,1,1,1]]
-    return pixels
+    coin_H_G = [[0,0,0,0,0,0,0,1],
+                [0,1,1,1,1,1,0,1],
+                [0,1,0,0,0,1,0,1],
+                [0,1,0,0,0,1,0,1],
+                [0,1,0,0,0,1,0,1],
+                [0,1,1,1,1,1,0,1], 
+                [0,0,0,0,0,0,0,1],
+                [1,1,1,1,1,1,1,1]]
+    
+
+    coin_H_D=[[1, 0,0,0,0,0,0,0],
+              [1,0,1,1,1,1,1,0],
+              [1,0,1,0,0,0,1,0], 
+              [1,0,1,0,0,0,1,0],
+              [1,0,1,0,0,0,1,0],
+              [1,0,1,0,0,0,1,0],
+              [1,0,1,1,1,1,1,0],
+              [1,0,0,0,0,0,0,0]]
+
+    coin_B_G= [[1,1,1,1,1,1,1,] ,
+              [0,0,0,0,0,0,0, 1], 
+              [0,1,1,1,1,1,0,1], 
+              [0,1,0,0,0,1,0,1] ,
+              [0,1,0,0,0,1,0,1], 
+              [0,1,0,0,0,1,0,1], 
+              [0,1,1,1,1,1,0,1],
+              [0,0,0,0,0,0,0,1]]
+
+    return coin_H_G , coin_B_G , coin_H_D
+
 
 def trouver_carre():
     """Fonction qui trouve le coin dans lequel le carre_de_base n'apparait 
     pas et retourne l'image pour avoir les 3 carrés dans les bons coins"""
-    pass
+    global mat
+    for i in range (18, 25):
+        for j in range (18, 25):
+            while matrice [i][j] == coin_H_G or matrice [i][j] == coin_H_D or matrice [i][j] == coin_B_G:
+                rotate_gauche(filename)
 
 def trouver_lignes():
     """Fonction qui vérifie que les 2 lignes qui relient
