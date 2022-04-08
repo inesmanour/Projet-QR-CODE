@@ -91,8 +91,8 @@ def trouver_coin():
     for i in range (17, 25):
         for j in range (17, 25):
             coin_B_D.append(mat[i][j])
-            if coin_B_D == coin_B_G or coin_B_D == coin_H_D or coin_B_D == coin_H_G:
-                rotate_gauche("test_coin.png")
+    while coin_B_D == coin_B_G or coin_B_D == coin_H_D or coin_B_D == coin_H_G:
+        rotate_gauche("test_coin.png")
 
 def trouver_lignes():
     """Fonction qui vérifie que les 2 lignes qui relient
@@ -105,5 +105,5 @@ def trouver_lignes():
     for i in range(8, 16):
         m_H.append(mat[6][i])
         m_V.append(mat[i][6])
-    if m_H != ligne_horizontale or m_V != ligne_verticale:
+    while m_H != ligne_horizontale or m_V != ligne_verticale:
         rotate_gauche("test_coin.png")
