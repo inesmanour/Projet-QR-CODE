@@ -175,3 +175,75 @@ def decoder_Hamming(bits):
         bits[num-1] = int(not bits[num-1])  
         print("Correction d'un pixel corrompu en position " + str(num)+ "\n")
     return [bits[2], bits[4], bits[5], bits[6]]
+
+------------
+" une fonction qui parcourt l’image d’un QR code pour renvoyer l’information lue sous la forme d’une liste de listes de 14 bits"
+def lecture_bloc(mat):  
+    liste_bloc=[]   # grande liste contenant sous listes de 14 bits
+    cpt=0            
+    i=24             # initialiser a 24 24 pour demarrer en bas a droite la lecture 
+    j=24 
+    
+    bit = mat [i][j]           # ajout du premier bit de lecture en bas a droite dans ma liste_tampon de 14bit
+    liste_tampon.append(bit)
+    
+while cpt <14:                # ajout des 13 prochains bits de ma sous liste de 14bit 
+    
+    cpt+=1 
+    j=j-1                  # mouvement a droite 
+    bit= mat [i][j] 
+    liste_tampon.append(bit)
+   
+    cpt+=1
+    i=i-1                     # mouvment en haut 
+    j=j+1                    # puis mouvement a droite  
+    bit = mat [i][j]
+    liste_tampon.append(bit)
+    
+liste_bloc.append(liste_tampon)             # ajout de sous liste de 14 bits = une bloc
+
+while i!=0 and j!=0 :     # si nous nous ne trouvons pas a la fin de la lecture , lecture du prochain bloc 
+    liste_tampon=[]       # donc nouvelle liste vide qu'on remplira 
+    
+    while cpt <15:        # remplir avec 14bits notre nvlle sous liste de 14 bits 
+    
+    cpt+=1
+    j=j-1       #mouvment a gauche 
+    bit= mat [i][j] 
+    liste_tampon.append(bit)
+   
+    if i=0:                     # une contrainte-> lorsqu'on est en haut pouvoir redescendre en bas pour continuer la lecture 
+        cpt=cpt+1
+        i=24                    # quand on est en bas -->ligne 24 psq la derniere ligne 
+        j=j-1                   # but cela se fait que lorsque on a i=0 et j=j-1 
+        bit=mat[i][j]
+        liste_tampon.append(bit)
+        cpt+=1   
+        j=j-1                   #mouvment a gauche
+        bit= mat [i][j] 
+        liste_tampon.append(bit)
+        
+        
+    cpt+=1          # si pas de contrainte continuer la lecture 
+    i=i-1 
+    j=j+1   
+    bit = mat [i][j]
+    liste_tampon.append(bit)
+    
+ liste_bloc.append(liste_tampon) # ajout des sous listes de 14 bits ( lecture de bloc) dans une grand liste 
+  
+
+   
+    
+     
+    
+    
+   
+    
+    
+    
+    
+ 
+        
+        
+   
