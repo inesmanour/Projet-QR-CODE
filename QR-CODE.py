@@ -46,12 +46,14 @@ def loading(filename):
     return mat
 
 
-def rotate_Droite():
+def rotate_gauche():
     mat=loading(image_courante)
     mat_res = [[0, 0, 0, 0] * nbrLig(mat) for i in range (nbrCol(mat))]
     for i in range (nbrLig(mat_res)):
         for j in range (nbrCol(mat_res)):
-            mat_res [i][j] = mat [nbrLig(mat) -1-j][i]
+            mat_res [i][j] = mat [i][nbrCol(mat)-1-i]
+
+
 
 def carre_de_base():
     """Matrice de pixels qui crée un carré noir de 3x3 pixels enrouré d'une bande 
@@ -91,7 +93,7 @@ def trouver_coin():
             coin_B_D.append(mat[i][j])
     print(coin_B_D)
     if coin_B_D == carre:
-        rotate_Droite()
+        rotate_gauche()
     saving(mat, "photo.png")
     #return matrice
     
@@ -109,37 +111,58 @@ def trouver_lignes():
         m_H.append(mat[6][i])
         m_V.append(mat[i][6])
     if m_H != ligne_horizontale or m_V != ligne_verticale:
-        rotate_Droite()
-        saving(mat, "image.png")
+        rotate_gauche()
+    saving(mat, "image.png")
+
 
 def lecture_bloc(mat):  
     """ Fonction qui parcourt l’image d’un QR code pour renvoyer 
     l’information lue sous la forme d’une liste de listes de 14 bits"""
-
-    grande_liste=[]   #liste contenant les sous listes de 14 bits
-    bloc = []         # liste qui va contenir 14 bits
+    global serie, grande_liste, cpt, bloc, impair
+    serie = 0
+    #liste contenant les sous listes de 14 bits
+    grande_liste=[]  
+    # liste qui va contenir 14 bits
+    bloc = []         
     cpt=0            
-    i=24             # initialiser a 24 pour démarrer la lecture en bas a droite 
+    i=24     # initialiser à 24 pour démarrer la lecture en bas a droite 
     j=24 
-    bit = mat [i][j]           # ajout du premier bit de lecture en bas a droite dans laa liste de 14 bits
+    # ajout du premier bit de lecture en bas a droite dans laa liste de 14 bits
+    bit = mat [i][j]    
     bloc.append(bit)
 
-#pour le premier bloc  
-    while cpt <14:                # ajout des 13 prochains bits de ma sous liste de 14 bits 
-        cpt+=1 
-        i=i-1                     # mouvement en haut 
-        bit= mat [i][j] 
-        bloc.append(bit)
-   
-        cpt+=1
-        i=i+1                     # mouvment en bas 
-        j=j-1                     # puis mouvement a gauche
-        bit = mat [i][j]
-        bloc.append(bit)   
-    grande_liste.append(bloc)             # ajout de sous liste de 14 bits = une bloc
-    bloc = []
+    while serie <= 8:
+        if serie % 2 == 0:
+            lecture_droite_gauche()
+        else:
+            lecture_gauche_droite()
 
-#pour le deuxième bloc
+
+def lecture_droite_gauche(mat):
+    """Fonction pour lire les blocs de droite à gauche"""
+    global serie, cpt, grande_liste, bloc
+#pour la première série de blocs
+    while serie <= 8:    # pour lire au plus 8 séries de 2 blocs
+        for i in range (2):
+            while cpt <14:                # ajout des 13 prochains bits de ma sous liste de 14 bits 
+                cpt+=1 
+                i=i-1                     # mouvement en haut 
+                bit= mat [i][j] 
+                bloc.append(bit)
+   
+                cpt+=1
+                i=i+1                     # mouvment en bas 
+                j=j-1                     # puis mouvement a gauche
+                bit = mat [i][j]
+                bloc.append(bit)   
+            grande_liste.append(bloc)             # ajout de sous liste de 14 bits = une bloc
+            bloc = []
+            cpt = 0
+        serie += 1   #on crée fonction lecture droite gauche et fonction gauche droite on impose condition sur serie paire ou impaire
+
+def lecture_gauche_droite(mat):
+    """Fonction pour lire les blocs de gauche à droite"""
+    global serie, cpt, grande_liste, bloc
     while 14 < cpt < 28:    
         """i -= 1    # pour pouvoir lire le 1er bit
         bloc.append(mat[i][j])
@@ -156,5 +179,5 @@ def lecture_bloc(mat):
 
 
 # programme principal
-print(trouver_coin())
-#print(trouver_lignes())
+#print(trouver_coin())
+print(trouver_lignes())
