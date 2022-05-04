@@ -191,28 +191,47 @@ est demandé et en plus je ne sais pas trop comment lire 8bits par 8bits """
 
 #######################################################################################
 def filtres(mat):
-        pix1 = mat[22][8]
-        pix2 = mat[23][8]
-        #filtre tout noir
-        if pix1 == 0 and pix2 == 0:
-            filtre = [[0]*25] * 25
-        #damier
-        elif pix1 == 0 and pix2 == 1:
-            filtre = []
-            for i in range(25):
-                if i%2 ==0:
-                    liste = [0,1,0,1]*6 +[0]
-                    filtre.append(liste)
-                else:
-                    liste = [1,0,1,0]*6 +[1]
-                    filtre.append(liste)
-        #filtre avec alternance lignes horizontales noires et lignes blanches            
-        elif pix1 == 1 and pix2 == 0:
-            filtre = [[0]*25, [1]*25] * 12 + [[0]*25]
-        #filtre avec alternance lignes verticales noires et lignes blanches
-        elif pix1 == 1 and pix2 == 1:
-            filtre = [[0,1,0,1]*6 +[0]] * 25
+    """Fonction qui choisit le filtre en fonction 
+    des bits de contrôle et applique le filtre"""
+    global filtre
+    pix1 = mat[22][8]
+    pix2 = mat[23][8]
 
+    #filtre tout noir
+    if pix1 == 0 and pix2 == 0:
+        filtre = [[0]*25] * 25
+        application_filtre()
+
+    #damier
+    elif pix1 == 0 and pix2 == 1:
+        filtre = []
+        for i in range(25):
+            if i%2 ==0:
+                liste = [0,1,0,1]*6 +[0]
+                filtre.append(liste)
+            else:
+                liste = [1,0,1,0]*6 +[1]
+                filtre.append(liste)
+        application_filtre()
+
+    #filtre avec alternance lignes horizontales noires et lignes blanches            
+    elif pix1 == 1 and pix2 == 0:
+        filtre = [[0]*25, [1]*25] * 12 + [[0]*25]
+        application_filtre()
+
+    #filtre avec alternance lignes verticales noires et lignes blanches
+    elif pix1 == 1 and pix2 == 1:
+        filtre = [[0,1,0,1]*6 +[0]] * 25
+        application_filtre()
+
+def application_filtre(mat):
+    """Fonction qui permet d'appliquer le filtre en faisant 
+    un XOR entre les pixels du filtre et ceux du QR code"""
+    res = []
+    for i in range(25):
+        for j in range(25):
+            res.append(mat[i][j] ^ filtre[i][j])
+    return res
 ###########################################################################
 def nbr_de_blocs(mat):
     liste = [mat[13][0],mat[14][0],mat[15][0],mat[16][0],mat[17][0]]
