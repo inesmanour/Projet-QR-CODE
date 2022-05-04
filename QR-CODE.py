@@ -193,29 +193,41 @@ est demandé et en plus je ne sais pas trop comment lire 8bits par 8bits """
 def filtres(mat):
         pix1 = mat[22][8]
         pix2 = mat[23][8]
+        #filtre tout noir
         if pix1 == 0 and pix2 == 0:
             filtre = [[0]*25] * 25
-            print(filtre)
+        #damier
         elif pix1 == 0 and pix2 == 1:
-            pass
+            filtre = []
+            for i in range(25):
+                if i%2 ==0:
+                    liste = [0,1,0,1]*6 +[0]
+                    filtre.append(liste)
+                else:
+                    liste = [1,0,1,0]*6 +[1]
+                    filtre.append(liste)
+        #filtre avec alternance lignes horizontales noires et lignes blanches            
         elif pix1 == 1 and pix2 == 0:
             filtre = [[0]*25, [1]*25] * 12 + [[0]*25]
+        #filtre avec alternance lignes verticales noires et lignes blanches
         elif pix1 == 1 and pix2 == 1:
             filtre = [[0,1,0,1]*6 +[0]] * 25
 
+###########################################################################
+def nbr_de_blocs(mat):
+    liste = [mat[13][0],mat[14][0],mat[15][0],mat[16][0],mat[17][0]]
+    nb_blocs = conversionEntier(liste)
+    #print("Le nommbre de blocs à décoder est" + nb_blocs)
+    return nb_blocs
 
-filtre = []
-for i in range(25):
-    if i%2 ==0:
-        liste = [0,1,0,1]*6 +[0]
-        filtre.append(liste)
-    else:
-        liste = [1,0,1,0]*6 +[1]
-        filtre.append(liste)
-print(filtre) 
-
-
-
+def conversionEntier(liste):
+    res = 0
+    liste.reverse()
+    for i in range (len(liste)):
+        res+= liste[i]*(2**i)
+    return res
+a = 3
+print("le lio"+ str(a))
 
 # programme principal
 print(trouver_coin())
