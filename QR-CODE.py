@@ -46,12 +46,13 @@ def loading(filename):
     return mat
 
 
-def rotate_gauche():
-    mat=loading(image_courante)
-    mat_res = [[0, 0, 0, 0] * nbrLig(mat) for i in range (nbrCol(mat))]
-    for i in range (nbrLig(mat_res)):
-        for j in range (nbrCol(mat_res)):
-            mat_res [i][j] = mat [i][nbrCol(mat)-1-i]
+def rotate_gauche(matrice):
+   global mat_res # ne pas initialiser avec un mat=Loading(image_courante sinon lors de la 2e rotation on reviens sur initiale et n'enregistre pas la premiere rotation 
+   mat_res = [[0, 0, 0, 0] * nbrLig(matrice) for i in range (nbrCol(matrice))]
+   for i in range (nbrLig(mat_res)):
+       for j in range (nbrCol(mat_res)):
+           mat_res [i][j] = matrice [i][nbrCol(matrice)-1-i]
+   return mat_res 
 
 
 
@@ -59,13 +60,7 @@ def carre_de_base():
     """Matrice de pixels qui crée un carré noir de 3x3 pixels enrouré d'une bande 
     blanche entourée d'une bande noire entourée d'une bande blanche à droite et en bas"""
     #global carre
-    """carre = [[0,0,0,0,0,0,0],
-             [0,1,1,1,1,1,0],
-             [0,1,0,0,0,1,0],
-             [0,1,0,0,0,1,0],
-             [0,1,0,0,0,1,0],
-             [0,1,1,1,1,1,0], 
-             [0,0,0,0,0,0,0]]"""
+    
     carre = [0, 0, 0, 0, 0, 0, 0, 
              0, 1, 1, 1, 1, 1, 0,
              0, 1, 0, 0, 0, 1, 0,
@@ -79,6 +74,8 @@ def carre_de_base():
 def trouver_coin():
     """Fonction qui trouve le coin dans lequel le carre_de_base n'apparait 
     pas et retourne l'image pour avoir les 3 carrés dans les bons coins"""
+    cpt=0 
+    global mat_res
     carre = [0, 0, 0, 0, 0, 0, 0, 
              0, 1, 1, 1, 1, 1, 0,
              0, 1, 0, 0, 0, 1, 0,
@@ -86,16 +83,28 @@ def trouver_coin():
              0, 1, 0, 0, 0, 1, 0,
              0, 1, 1, 1, 1, 1, 0,
              0, 0, 0, 0, 0, 0, 0]
+    
     mat = loading(image_courante)
     coin_B_D = []
     for i in range (18, 25):
         for j in range (18, 25):
             coin_B_D.append(mat[i][j])
     print(coin_B_D)
-    if carre in coin_B_D:
-        rotate_gauche()
+    
+    while carre == coin_B_D and cpt<=3 :  # boucle pour ne pas que ca s'arrte au premier rotate mais fin d'arret qd c'est bien placer:
+        mat=rotate_gauche(mat)
+        coin_B_D =[]
+        for i in range (18, 25):
+            for j in range (18, 25):
+                coin_B_D.append(mat[i][j])
+       
+        cpt+=1
+
+    toto = mat # use toto qu'on return pour utiliser notre image avec le coin vide bien placé ensuite 
+  
     saving(mat, "photo.png")
-    #return matrice
+    return toto
+    
     
     
 def trouver_lignes():
