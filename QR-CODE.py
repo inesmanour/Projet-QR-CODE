@@ -254,8 +254,7 @@ def conversionEntier(liste):
     for i in range (len(liste)):
         res+= liste[i]*(2**i)
     return res
-a = 3
-print("le lio"+ str(a))
+
 
 # programme principal
 print(trouver_coin())
