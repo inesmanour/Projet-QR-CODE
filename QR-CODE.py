@@ -60,8 +60,6 @@ def rotate_gauche(matrice):
 def carre_de_base():
     """Matrice de pixels qui crée un carré noir de 3x3 pixels enrouré d'une bande 
     blanche entourée d'une bande noire entourée d'une bande blanche à droite et en bas"""
-    #global carre
-    
     carre = [0, 0, 0, 0, 0, 0, 0, 
              0, 1, 1, 1, 1, 1, 0,
              0, 1, 0, 0, 0, 1, 0,
@@ -69,15 +67,15 @@ def carre_de_base():
              0, 1, 0, 0, 0, 1, 0,
              0, 1, 1, 1, 1, 1, 0,
              0, 0, 0, 0, 0, 0, 0]
-    #return carre
+
 
 
 def trouver_coin():
     """Fonction qui trouve le coin dans lequel le carre_de_base n'apparait 
     pas et retourne l'image pour avoir les 3 carrés dans les bons coins"""
-    cpt=0 
     global mat_res
     global bon_qr_code
+    cpt=0 
     carre = [0, 0, 0, 0, 0, 0, 0, 
              0, 1, 1, 1, 1, 1, 0,
              0, 1, 0, 0, 0, 1, 0,
@@ -93,15 +91,15 @@ def trouver_coin():
             coin_B_D.append(mat[i][j])
     print(coin_B_D,'print de trouver coin')
     
-    while carre == coin_B_D and cpt<=3 :  # boucle pour ne pas que ca s'arrte au premier rotate mais fin d'arret qd c'est bien placer:
-        mat=rotate_gauche(mat)
-        coin_B_D =[]
-        for i in range (18, 25):
-            for j in range (18, 25):
-                coin_B_D.append(mat[i][j])
-       
+    while cpt <3:
+        if carre == coin_B_D :  # boucle pour ne pas que ca s'arrte au premier rotate mais fin d'arret qd c'est bien placer:
+            mat=rotate_gauche(mat)
+            coin_B_D =[]
+            for i in range (18, 25):
+                for j in range (18, 25):
+                    coin_B_D.append(mat[i][j])
         cpt+=1
-
+        print("c'est moi le compteur",cpt)
     bon_qr_code = mat # use toto qu'on return pour utiliser notre image avec le coin vide bien placé ensuite 
   
     saving(bon_qr_code, "photo.png")
@@ -113,6 +111,8 @@ def trouver_lignes():
     """Fonction qui vérifie que les 2 lignes qui relient
     les carrés des 3 coins apparaisent bien """
     mat = loading(image_courante)
+    qr_code =[]
+    cpt =0
     ligne_horizontale = [0,1,0,1,0,1,0,1,0]
     ligne_verticale =[[0],[1],[0],[1],[0],[1],[0],[1],[0]]
     m_H = []
@@ -120,9 +120,17 @@ def trouver_lignes():
     for i in range(8, 16):
         m_H.append(mat[6][i])
         m_V.append(mat[i][6])
-    if m_H != ligne_horizontale or m_V != ligne_verticale:
-        rotate_gauche()
-    saving(mat, "image.png")
+    while m_H != ligne_horizontale or m_V != ligne_verticale and cpt<3:
+        mat = rotate_gauche(mat)
+        m_H = []
+        m_V = []
+        for i in range(8, 16):
+            m_H.append(mat[6][i])
+            m_V.append(mat[i][6])
+        cpt+=1
+    qr_code = mat
+
+    saving(qr_code, "image.png")
 
 ########################################################################
 def lecture_bloc(mat):  
@@ -259,5 +267,5 @@ def conversionEntier(liste):
 
 
 # programme principal
-print(trouver_coin())
-#print(trouver_lignes())
+#print(trouver_coin())
+print(trouver_lignes())
