@@ -49,9 +49,10 @@ def loading(filename):
 def rotate_gauche(matrice):
    global mat_res # ne pas initialiser avec un mat=Loading(image_courante sinon lors de la 2e rotation on reviens sur initiale et n'enregistre pas la premiere rotation 
    mat_res = [[0, 0, 0, 0] * nbrLig(matrice) for i in range (nbrCol(matrice))]
-   for i in range (nbrLig(mat_res)):
-       for j in range (nbrCol(mat_res)):
-           mat_res [i][j] = matrice [i][nbrCol(matrice)-1-i]
+   for i in range (nbrCol(matrice)):
+       for j in range (nbrLig(matrice)):
+           mat_res [i][j] = matrice [j][nbrCol(matrice)-1-i]
+   saving(mat_res, "test.png")
    return mat_res 
 
 
@@ -76,6 +77,7 @@ def trouver_coin():
     pas et retourne l'image pour avoir les 3 carrés dans les bons coins"""
     cpt=0 
     global mat_res
+    global bon_qr_code
     carre = [0, 0, 0, 0, 0, 0, 0, 
              0, 1, 1, 1, 1, 1, 0,
              0, 1, 0, 0, 0, 1, 0,
@@ -89,7 +91,7 @@ def trouver_coin():
     for i in range (18, 25):
         for j in range (18, 25):
             coin_B_D.append(mat[i][j])
-    print(coin_B_D)
+    print(coin_B_D,'print de trouver coin')
     
     while carre == coin_B_D and cpt<=3 :  # boucle pour ne pas que ca s'arrte au premier rotate mais fin d'arret qd c'est bien placer:
         mat=rotate_gauche(mat)
@@ -100,10 +102,10 @@ def trouver_coin():
        
         cpt+=1
 
-    toto = mat # use toto qu'on return pour utiliser notre image avec le coin vide bien placé ensuite 
+    bon_qr_code = mat # use toto qu'on return pour utiliser notre image avec le coin vide bien placé ensuite 
   
-    saving(mat, "photo.png")
-    return toto
+    saving(bon_qr_code, "photo.png")
+    return bon_qr_code
     
     
     
