@@ -232,12 +232,143 @@ while i!=0 and j!=0 :     # si nous nous ne trouvons pas a la fin de la lecture 
     
  liste_bloc.append(liste_tampon) # ajout des sous listes de 14 bits ( lecture de bloc) dans une grand liste 
   
+######## lecture bloc fct 
+
+def lecture_bloc(mat):  
+    """ Fonction qui parcourt l’image d’un QR code pour renvoyer 
+    l’information lue sous la forme d’une liste de listes de 14 bits"""
+    global serie, grande_liste, cpt, bloc, impair , i , j , 
+    serie = 0
+    #liste contenant les sous listes de 14 bits
+    grande_liste=[]  
+    # liste qui va contenir 14 bits
+    bloc = []         
+    cpt=0            
+    i=24     # initialiser à 24 pour démarrer la lecture en bas a droite 
+    j=24 
+    # ajout du premier bit de lecture en bas a droite dans laa liste de 14 bits
+    bit = mat [i][j]    
+    bloc.append(bit)
+
+    '''la 1er lecture''' 
+    #lecture des deux premiers blocs a part pcq porbleme quand faudra add le prochain premier bit donc initailiser la premiere lecture a part
+    for k in range (2):
+        while cpt <13:                # ajout des 13 prochains bits de ma sous liste de 14 bits 
+            
+            i=i-1                     # mouvement en haut 
+            bit= mat [i][j] 
+            bloc.append(bit)
+            cpt+=1
+            i=i+1                     # mouvment en bas
+            j=j-1                     # puis mouvement a gauche
+            bit = mat [i][j]
+            bloc.append(bit)   
+        grande_liste.append(bloc)             # ajout de sous liste de 14 bits = une bloc
+        bloc = []
+        cpt = 0
+        serie += 1 
+
+    
+    while serie <= 8: #pour lire au maximum 8 séries de 2 blocs
+        if serie % 2 == 0:
+            lecture_droite_gauche()
+        else:
+            lecture_gauche_droite()
+   
+
+
+
+
+def lecture_droite_gauche(mat): ### faire meme concept que le gauche droite
+    """Fonction pour lire les blocs de droite à gauche a partir de la seconde itération"""
+    global serie, cpt, grande_liste, bloc,i, j  #pour la première série de blocs
+    
+    i -= 1    # pour pouvoir lire le 1er bit
+    bloc.append(mat[i][j])
+
+    for k in range (2):
+
+        if k==0 :# lecture premier bloc de 7 bit)
+            while cpt <13:                # ajout des 13 prochains bits de ma sous liste de 14 bits 
+                i=i-1                     # mouvement en haut 
+                bit= mat [i][j] 
+                bloc.append(bit)
+                cpt+=1
+                i=i+1                     # mouvment en bas
+                j=j-1                     # puis mouvement a gauche
+                bit = mat [i][j]
+                bloc.append(bit)   
+            
+            grande_liste.append(bloc)             # ajout de sous liste de 14 bits = une bloc
+            bloc = []
+            cpt = 0
+            serie += 1   #on crée fonction lecture droite gauche et fonction gauche droite on impose condition sur serie paire ou impaire
+
+        else:  # lecture du second bloc 
+            while cpt<14:
+                i=i-1                     # mouvement en haut 
+                bit= mat [i][j] 
+                bloc.append(bit)
+                cpt+=1
+                i=i+1                     # mouvment en bas
+                j=j-1                     # puis mouvement a gauche
+                bit = mat [i][j]
+                bloc.append(bit)   
+
+            grande_liste.append(bloc)             # ajout de sous liste de 14 bits = une bloc
+            bloc = []
+            cpt = 0
+            serie += 1  
+    
+    
+
+
+
+def lecture_gauche_droite(mat):
+    """Fonction pour lire les blocs de gauche à droite"""
+    global serie, cpt, grande_liste, bloc, i, j 
+
+    i -= 1    # pour pouvoir lire le 1er bit
+    bloc.append(mat[i][j])
+    
+    for k in range (2):
+        
+        if k==0:  # condition pour lire le premier bloc 
+            while cpt<13:    
+                i -= 1    #pour pouvoir lire le 2e bit
+                bloc.append(mat[i][j])
+                cpt+=1      
+
+                i=i+1                     # mouvment en bas 
+                j=j+1    # puis mouvement a droite
+                bit= mat [i][j] 
+                bloc.append(bit)
+
+            grande_liste.append(bloc)
+            bloc = []
+            cpt = 0
+
+        else :  # lecture du deuxieme bloc (--> serie complete de 2 blocs lues) 
+            while cpt<14:    
+                i -= 1    #pour pouvoir lire le 2e bit
+                bloc.append(mat[i][j])
+                cpt+=1      
+
+                i=i+1                     # mouvment en bas 
+                j=j+1    # puis mouvement a droite
+                bit= mat [i][j] 
+                bloc.append(bit)
+
+
+            grande_liste.append(bloc)
+            bloc = []
+            cpt = 0
+            serie+=1
 
    
     
      
-    
-    
+
    
     
     
