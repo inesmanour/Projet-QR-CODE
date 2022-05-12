@@ -200,7 +200,35 @@ def lecture_gauche_droite(mat):
     grande_liste.append(bloc)
     cpt = 0
 
-####################################################################################""
+    
+    ######################################################################################
+def decoder_Haming(bits): #en entrée on a une liste de 7 bits messages + correction
+    """La fonction décoder doit renvoyer le message corrigé s'il y a erreur"""
+    p1 = bits[0] ^ bits[1] ^ bits[2] 
+    p2 = bits[0] ^ bits[2] ^ bits[3]
+    p3 = bits[1] ^ bits[2] ^ bits[3]
+
+    #position de l'erreur s'il y en a une (0 sinon)
+    num = int(p1!=bits[0]) + int(p2 != bits[1])*2 + int(p3!=bits[3])*4 #pour avoir la position de l'erreur en décimale d'où *2 et *4
+
+    #si la position de l'erreur est sur la position d'un bit de message on corrige
+    #not c comme booléen renvoie 0 ou 1
+    if (num == 3):
+        bits[0] = int (not bits[0])
+        #print("correction d'un pixel corrompu 1\n")
+    if (num == 5):
+        bits[1] = int (not bits[1])
+        #print("correction d'un pixel corrompu 2\n")
+    if (num == 6):
+        bits[2] = int (not bits[2])
+        #print("correction d'un pixel corrompu 3\n")
+    if (num == 7):
+        bits[3] = int (not bits[3])
+        #print("correction d'un pixel corrompu 4\n")
+    return bits[:4]
+
+
+#######################################################################################
 def type_de_donnees(mat):
     global grande_liste
     pix = mat[24][8]
