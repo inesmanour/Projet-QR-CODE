@@ -14,6 +14,8 @@ from PIL import ImageTk
 from tkinter import filedialog
 from tkinter import simpledialog
 
+from numpy import mat
+
 carre = []
 image_courante= "qr_code_ssfiltre_ascii_rotation.png"
 
@@ -76,9 +78,8 @@ def trouver_coin():
     """Fonction qui trouve le coin dans lequel le carre_de_base n'apparait 
     pas et retourne l'image pour avoir les 3 carrés dans les bons coins"""
     global mat_res
-    global bon_qr_code
+    global bon_qr_code, mat
     cpt=0 
-    global carre
     carre = [0, 0, 0, 0, 0, 0, 0, 
              0, 1, 1, 1, 1, 1, 0,
              0, 1, 0, 0, 0, 1, 0,
@@ -139,69 +140,139 @@ def trouver_lignes():
     return qr_code
 
 ########################################################################
+
+
+##################################################
 def lecture_bloc(mat):  
     """ Fonction qui parcourt l’image d’un QR code pour renvoyer 
     l’information lue sous la forme d’une liste de listes de 14 bits"""
-    global serie, grande_liste, cpt, bloc, impair
+    global serie, grande_liste, cpt, bloc, i , j
     serie = 0
     #liste contenant les sous listes de 14 bits
     grande_liste=[]  
     # liste qui va contenir 14 bits
     bloc = []         
-    cpt=0            
-    i=24     # initialiser à 24 pour démarrer la lecture en bas a droite 
+    cpt=0
+    # initialiser à 24 pour démarrer la lecture en bas a droite
+    i=25     
     j=24 
-    # ajout du premier bit de lecture en bas a droite dans laa liste de 14 bits
-    bit = mat [i][j]    
-    bloc.append(bit)
-
-    while serie <= 8: #pour lire au maximum 8 séries de 2 blocs
+    while serie < 8: #pour lire au maximum 8 séries de 2 blocs
         if serie % 2 == 0:
-            lecture_droite_gauche()
+            lecture_droite_gauche(mat)
         else:
-            lecture_gauche_droite()
-
-
-def lecture_droite_gauche(mat):
-    """Fonction pour lire les blocs de droite à gauche"""
-    global serie, cpt, grande_liste, bloc
-#pour la première série de blocs
-    while serie <= 8:    # pour lire au plus 8 séries de 2 blocs
-        for i in range (2):
-            while cpt <14:                # ajout des 13 prochains bits de ma sous liste de 14 bits 
-                cpt+=1 
-                i=i-1                     # mouvement en haut 
-                bit= mat [i][j] 
-                bloc.append(bit)
+            lecture_gauche_droite(mat)
+    return grande_liste
    
-                cpt+=1
-                i=i+1                     # mouvment en bas 
-                j=j-1                     # puis mouvement a gauche
-                bit = mat [i][j]
-                bloc.append(bit)   
+
+
+
+
+def lecture_droite_gauche(mat): ### faire meme concept que le gauche droite
+    """Fonction pour lire les blocs de droite à gauche a partir de la seconde itération"""
+    global serie, cpt, grande_liste, bloc,i, j  #pour la première série de blocs
+    """i = 25
+    j = 24
+    bloc = []
+    cpt = 0
+    grande_liste = []
+    serie = 0"""
+    for k in range (2):
+        if k==0 :# lecture premier bloc de 7 bit)
+            i = i-1    # pour pouvoir lire le 1er bit
+            bloc.append(mat[i][j])
+            cpt+=1
+            while cpt <14: 
+                if cpt%2 != 0:               # ajout des 13 prochains bits de ma sous liste de 14 bits 
+                    i=i-1                     # mouvement en haut 
+                    bit= mat [i][j] 
+                    bloc.append(bit)
+                    cpt+=1
+                else:
+                    i=i+1                     # mouvment en bas
+                    j=j-1
+                     # puis mouvement a gauche
+                    bit = mat [i][j]
+                    bloc.append(bit) 
+                    cpt+=1  
+                #print(cpt) 
+            
             grande_liste.append(bloc)             # ajout de sous liste de 14 bits = une bloc
             bloc = []
             cpt = 0
-        serie += 1   #on crée fonction lecture droite gauche et fonction gauche droite on impose condition sur serie paire ou impaire
+            
+        else:  # lecture du second bloc 
+            while cpt<14:
+                if cpt%2 == 0:
+                    i=i+1                     # mouvement en bas
+                    bit= mat [i][j] 
+                    bloc.append(bit)
+                    cpt+=1
+                else:
+                    i=i-1                     # mouvment en haut
+                    j=j-1
+                    print("j=", j)                     # puis mouvement a gauche
+                    bit = mat [i][j]
+                    bloc.append(bit)
+                    cpt+=1   
+                print(cpt)
+
+
+            grande_liste.append(bloc)             # ajout de sous liste de 14 bits = une bloc
+            bloc = []
+            cpt = 0
+    serie += 1  
+    
+    
+
+
 
 def lecture_gauche_droite(mat):
     """Fonction pour lire les blocs de gauche à droite"""
-    global serie, cpt, grande_liste, bloc
-    while 14 < cpt < 28:    
-        """i -= 1    # pour pouvoir lire le 1er bit
-        bloc.append(mat[i][j])
-        i -= 1    #pour pouvoir lire le 2e bit
-        bloc.append(mat[i][j])
-        cpt+=1"""       #problème ça va se refaire à chaque fois #demander quand on monte de 2 pixels si on monte ou on descend
-        i=i+1                     # mouvment en bas 
-        j=j+1    # puis mouvement a droite
-        bit= mat [i][j] 
-        bloc.append(bit)
-    grande_liste.append(bloc)
-    cpt = 0
+    global serie, cpt, grande_liste, bloc, i, j 
 
-    
-    ######################################################################################
+    for k in range (2):
+        
+        if k==0:  # condition pour lire le premier bloc 
+            i = i-1    # pour pouvoir lire le 1er bit
+            bloc.append(mat[i][j])
+            cpt+=1
+            while cpt<14: 
+                if cpt%2 != 0:   
+                    i = i-1    #pour pouvoir lire le 2e bit
+                    bloc.append(mat[i][j])
+                    cpt+=1 
+                else:     
+                    i=i+1                     # mouvment en bas 
+                    j=j+1    # puis mouvement a droite
+                    bit= mat [i][j] 
+                    bloc.append(bit)
+                    cpt+=1
+
+            grande_liste.append(bloc)
+            bloc = []
+            cpt = 0
+
+        else :  # lecture du deuxieme bloc (--> serie complete de 2 blocs lues) 
+            while cpt <14:
+                if cpt%2 == 0:    
+                    i = i-1    #pour pouvoir lire le 2e bit
+                    bloc.append(mat[i][j])
+                    cpt+=1    
+                else:  
+                    # mouvment en bas
+                    i=i+1 
+                    # puis mouvement a droite                     
+                    j=j+1    
+                    print("j=", j)
+                    bit= mat [i][j] 
+                    bloc.append(bit)
+                    cpt+=1
+            grande_liste.append(bloc)
+            bloc = []
+            cpt = 0
+    serie+=1
+
+######################################################################################
 def decoder_Haming(bits): #en entrée on a une liste de 7 bits messages + correction
     """La fonction décoder doit renvoyer le message corrigé s'il y a erreur"""
     p1 = bits[0] ^ bits[1] ^ bits[2] 
@@ -285,6 +356,7 @@ def application_filtre(mat):
         for j in range(25):
             res.append(mat[i][j] ^ filtre[i][j])
     return res
+
 ###########################################################################
 def nbr_de_blocs(mat):
     liste = [mat[13][0],mat[14][0],mat[15][0],mat[16][0],mat[17][0]]
@@ -300,6 +372,8 @@ def conversionEntier(liste):
     return res
 
 
+
 # programme principal
-#print(trouver_coin())
-print(trouver_lignes())
+#print(trouver_lignes())
+trouver_coin()
+print(lecture_bloc(mat))
