@@ -48,7 +48,7 @@ def loading(filename):
 
 def rotate_gauche(matrice):
    global mat_res # ne pas initialiser avec un mat=Loading(image_courante sinon lors de la 2e rotation on reviens sur initiale et n'enregistre pas la premiere rotation 
-   mat_res = [[0, 0, 0, 0] * nbrLig(matrice) for i in range (nbrCol(matrice))]
+   mat_res = [[0] * nbrLig(matrice) for i in range (nbrCol(matrice))]
    for i in range (nbrCol(matrice)):
        for j in range (nbrLig(matrice)):
            mat_res [i][j] = matrice [j][nbrCol(matrice)-1-i]
@@ -267,5 +267,5 @@ def conversionEntier(liste):
 
 
 # programme principal
-#print(trouver_coin())
-print(trouver_lignes())
+print(trouver_coin())
+#print(trouver_lignes())
