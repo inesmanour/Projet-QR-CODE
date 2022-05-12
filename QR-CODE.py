@@ -60,6 +60,7 @@ def rotate_gauche(matrice):
 def carre_de_base():
     """Matrice de pixels qui crée un carré noir de 3x3 pixels enrouré d'une bande 
     blanche entourée d'une bande noire entourée d'une bande blanche à droite et en bas"""
+    global carre
     carre = [0, 0, 0, 0, 0, 0, 0, 
              0, 1, 1, 1, 1, 1, 0,
              0, 1, 0, 0, 0, 1, 0,
@@ -67,6 +68,7 @@ def carre_de_base():
              0, 1, 0, 0, 0, 1, 0,
              0, 1, 1, 1, 1, 1, 0,
              0, 0, 0, 0, 0, 0, 0]
+        return carre
 
 
 
@@ -76,13 +78,8 @@ def trouver_coin():
     global mat_res
     global bon_qr_code
     cpt=0 
-    carre = [0, 0, 0, 0, 0, 0, 0, 
-             0, 1, 1, 1, 1, 1, 0,
-             0, 1, 0, 0, 0, 1, 0,
-             0, 1, 0, 0, 0, 1, 0,
-             0, 1, 0, 0, 0, 1, 0,
-             0, 1, 1, 1, 1, 1, 0,
-             0, 0, 0, 0, 0, 0, 0]
+    global carre
+    
     
     mat = loading(image_courante)
     coin_B_D = []
