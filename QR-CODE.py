@@ -99,7 +99,6 @@ def trouver_coin():
                 for j in range (18, 25):
                     coin_B_D.append(mat[i][j])
         cpt+=1
-        print("c'est moi le compteur",cpt)
     bon_qr_code = mat # use toto qu'on return pour utiliser notre image avec le coin vide bien placé ensuite 
   
     saving(bon_qr_code, "photo.png")
@@ -113,24 +112,27 @@ def trouver_lignes():
     mat = loading(image_courante)
     qr_code =[]
     cpt =0
-    ligne_horizontale = [0,1,0,1,0,1,0,1,0]
-    ligne_verticale =[[0],[1],[0],[1],[0],[1],[0],[1],[0]]
+    ligne = [0,1,0,1,0,1,0,1,0]
+    
     m_H = []
     m_V = []
     for i in range(8, 16):
         m_H.append(mat[6][i])
         m_V.append(mat[i][6])
-    while m_H != ligne_horizontale or m_V != ligne_verticale and cpt<3:
-        mat = rotate_gauche(mat)
-        m_H = []
-        m_V = []
-        for i in range(8, 16):
-            m_H.append(mat[6][i])
-            m_V.append(mat[i][6])
+
+    while cpt<3:
+        if m_H != ligne or m_V != ligne :
+            mat = rotate_gauche(mat)
+            m_H = []
+            m_V = []
+            for i in range(8, 16):
+                m_H.append(mat[6][i])
+                m_V.append(mat[i][6])
         cpt+=1
     qr_code = mat
-
-    saving(qr_code, "image.png")
+    print("hello")
+    saving(qr_code, "code.png")
+    return qr_code
 
 ########################################################################
 def lecture_bloc(mat):  
@@ -267,5 +269,5 @@ def conversionEntier(liste):
 
 
 # programme principal
-print(trouver_coin())
-#print(trouver_lignes())
+#print(trouver_coin())
+print(trouver_lignes())
