@@ -79,6 +79,13 @@ def trouver_coin():
     global bon_qr_code
     cpt=0 
     global carre
+    carre = [0, 0, 0, 0, 0, 0, 0, 
+             0, 1, 1, 1, 1, 1, 0,
+             0, 1, 0, 0, 0, 1, 0,
+             0, 1, 0, 0, 0, 1, 0,
+             0, 1, 0, 0, 0, 1, 0,
+             0, 1, 1, 1, 1, 1, 0,
+             0, 0, 0, 0, 0, 0, 0]
     
     
     mat = loading(image_courante)
