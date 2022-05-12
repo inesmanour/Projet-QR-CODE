@@ -14,6 +14,76 @@ from PIL import ImageTk
 from tkinter import filedialog
 from tkinter import simpledialog
 
+
+"""def lectures_bloc(mat):  
+    """ Fonction qui parcourt l’image d’un QR code pour renvoyer 
+    l’information lue sous la forme d’une liste de listes de 14 bits"""
+    global serie, grande_liste, cpt, bloc, impair
+    serie = 0
+    #liste contenant les sous listes de 14 bits
+    grande_liste=[]  
+    # liste qui va contenir 14 bits
+    bloc = []         
+    cpt=0            
+    bit = 0
+    i=24     # initialiser à 24 pour démarrer la lecture en bas a droite 
+    j=24 
+    # ajout du premier bit de lecture en bas a droite dans laa liste de 14 bits
+    bit = mat [i][j]    
+    bloc.append(bit)
+
+    while serie <= 8: #pour lire au maximum 8 séries de 2 blocs
+        if serie % 2 == 0:
+            lecture_droite_gauche()
+        else:
+            lecture_gauche_droite()"""
+
+
+"""def lectures_droite_gauche(mat):
+    """Fonction pour lire les blocs de droite à gauche"""
+    global serie, cpt, grande_liste, bloc
+    bit = 0
+#pour la première série de blocs
+    while serie <= 8:    # pour lire au plus 8 séries de 2 blocs
+        for i in range (2):
+            while cpt <14:                # ajout des 13 prochains bits de ma sous liste de 14 bits 
+                cpt+=1 
+                i=i-1                     # mouvement en haut 
+                bit= mat [i][j] 
+                bloc.append(bit)
+   
+                cpt+=1
+                i=i+1                     # mouvment en bas 
+                j=j-1                     # puis mouvement a gauche
+                bit = mat [i][j]
+                bloc.append(bit)   
+            grande_liste.append(bloc)             # ajout de sous liste de 14 bits = une bloc
+            bloc = []
+            cpt = 0
+        serie += 1"""   #on crée fonction lecture droite gauche et fonction gauche droite on impose condition sur serie paire ou impaire
+
+"""def lectures_gauche_droite(mat):
+    """Fonction pour lire les blocs de gauche à droite"""
+    global serie, cpt, grande_liste, bloc
+    while 14 < cpt < 28:    
+        """i -= 1    # pour pouvoir lire le 1er bit
+        bloc.append(mat[i][j])
+        i -= 1    #pour pouvoir lire le 2e bit
+        bloc.append(mat[i][j])
+        cpt+=1"""       #problème ça va se refaire à chaque fois #demander quand on monte de 2 pixels si on monte ou on descend
+        i=i+1                     # mouvment en bas 
+        j=j+1    # puis mouvement a droite
+        bit= mat [i][j] 
+        bloc.append(bit)
+    grande_liste.append(bloc)
+    cpt = 0"""
+
+
+
+
+
+
+
 carre = []
 image_courante= "qr_code_ssfiltre_ascii_rotation.png"
 
