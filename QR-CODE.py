@@ -272,6 +272,14 @@ def lecture_gauche_droite(mat):
             cpt = 0
     serie+=1
 
+def decoupage_liste(grande_liste):
+    global liste_7_bits
+    liste_7_bits = []
+    for liste in grande_liste:
+        liste_7_bits.append(liste[0:7])
+        liste_7_bits.append(liste[7:])
+    #print("liste de 7 bits= ", liste_7_bits)
+
 ######################################################################################
 def decoder_Haming(bits): #en entrée on a une liste de 7 bits messages + correction
     """La fonction décoder doit renvoyer le message corrigé s'il y a erreur"""
@@ -298,18 +306,33 @@ def decoder_Haming(bits): #en entrée on a une liste de 7 bits messages + correc
         #print("correction d'un pixel corrompu 4\n")
     return bits[:4]
 
+def recuperer_messages(liste_7_bits):
+    """Fonction qui récupère les 4 bits de messages 
+    après correction s'il y avait une erreur"""
+    global message
+    message = []
+    for elem in liste_7_bits:
+        message.append(decoder_Haming(elem))
+    #print("message= ", message)
 
 #######################################################################################
-def type_de_donnees(mat):
-    global grande_liste
+def type_de_donnees(message):
     pix = mat[24][8]
     donnees = []
+    liste = []
     if pix == 0:
-        for elem in grande_liste:
+        for elem in message:  
             donnees.append(hex(int(elem, 2)))  
     elif pix == 1:
-        for elem in grande_liste:
-            donnees.append(chr(int(elem)))
+        k = 0
+        while k < nbrLig(message):
+            #pour avoir une liste de 8 bits de message
+            liste.append(message[k]+message[k+1])
+            k+=2
+        for elem in liste:
+            donnees.append(chr(conversionEntier(elem)))
+    print("données=", donnees)
+
 """J'ai essayé de faire la question 5 mais je ne suis pas sûre d'avoir vraiment compris ce qui 
 est demandé et en plus je ne sais pas trop comment lire 8bits par 8bits """
 
@@ -355,6 +378,7 @@ def application_filtre(mat):
     for i in range(25):
         for j in range(25):
             res.append(mat[i][j] ^ filtre[i][j])
+    saving(res, "filtre.png")
     return res
 
 ###########################################################################
@@ -365,6 +389,7 @@ def nbr_de_blocs(mat):
     return nb_blocs
 
 def conversionEntier(liste):
+    """Fonction """
     res = 0
     liste.reverse()
     for i in range (len(liste)):
@@ -372,8 +397,11 @@ def conversionEntier(liste):
     return res
 
 
-
+###########################################################################
 # programme principal
 #print(trouver_lignes())
 trouver_coin()
 print(lecture_bloc(mat))
+decoupage_liste(grande_liste)
+recuperer_messages(liste_7_bits)
+type_de_donnees(message)
