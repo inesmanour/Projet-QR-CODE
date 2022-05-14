@@ -15,7 +15,7 @@ from tkinter import filedialog
 from tkinter import simpledialog
 
 
-## création des fifférentes fonctions
+## création des différentes fonctions
 
 #fonctions de base vues en cours
 def nbrCol(matrice):
@@ -113,7 +113,7 @@ def trouver_coin():
     bon_qr_code = mat  
     
     # sauvegarder la matrice du QR code après rotation dans une nouvelle image
-    saving(bon_qr_code, "photo.png")
+    saving(bon_qr_code, "trouver_coin.png")
     return bon_qr_code
     
 
@@ -146,7 +146,7 @@ def trouver_lignes():
     qr_code = mat
 
     # sauvegarder la matrice du QR code après rotation dans une nouvelle image
-    saving(qr_code, "code.png")
+    saving(qr_code, "trouver_ligne.png")
     return qr_code
 
 ########################################################################
