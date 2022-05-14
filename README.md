@@ -20,13 +20,15 @@ Lien du github : https://github.com/uvsq22103405/Projet-QR-CODE.git
 
 *Structure générale : 
 	-Import des librairies 
-    -Définition des fonctions 
-    -Programme principal
+	
+	-Définition des fonctions 
+	
+	-Programme principal
 
 *Details et explications des fonctions : 
 
 	-def nbrCol():
-"""Fonction qui renvoie le nombre de colonnes d'une matrice"""
+	"""Fonction qui renvoie le nombre de colonnes d'une matrice"""
 
 	-def nbrLig( ):
 """Fonction qui renvoie le nombre de lignes d'une matrice »""
