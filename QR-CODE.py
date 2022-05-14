@@ -94,7 +94,7 @@ def trouver_coin():
     for i in range (18, 25):
         for j in range (18, 25):
             coin_B_D.append(mat[i][j])
-    print(coin_B_D,'print de trouver coin')
+
     
     while cpt <3:
         if carre == coin_B_D :  # boucle pour ne pas que ca s'arrte au premier rotate mais fin d'arret qd c'est bien placer:
@@ -135,7 +135,6 @@ def trouver_lignes():
                 m_V.append(mat[i][6])
         cpt+=1
     qr_code = mat
-    print("hello")
     saving(qr_code, "code.png")
     return qr_code
 
@@ -167,15 +166,9 @@ def lecture_bloc(mat):
 
 
 
-def lecture_droite_gauche(mat): ### faire meme concept que le gauche droite
+def lecture_droite_gauche(mat): 
     """Fonction pour lire les blocs de droite à gauche a partir de la seconde itération"""
-    global serie, cpt, grande_liste, bloc,i, j  #pour la première série de blocs
-    """i = 25
-    j = 24
-    bloc = []
-    cpt = 0
-    grande_liste = []
-    serie = 0"""
+    global serie, cpt, grande_liste, bloc,i, j  
     for k in range (2):
         if k==0 :# lecture premier bloc de 7 bit)
             i = i-1    # pour pouvoir lire le 1er bit
@@ -210,11 +203,10 @@ def lecture_droite_gauche(mat): ### faire meme concept que le gauche droite
                 else:
                     i=i-1                     # mouvment en haut
                     j=j-1
-                    print("j=", j)                     # puis mouvement a gauche
+                     # puis mouvement a gauche
                     bit = mat [i][j]
                     bloc.append(bit)
                     cpt+=1   
-                print(cpt)
 
 
             grande_liste.append(bloc)             # ajout de sous liste de 14 bits = une bloc
@@ -263,7 +255,6 @@ def lecture_gauche_droite(mat):
                     i=i+1 
                     # puis mouvement a droite                     
                     j=j+1    
-                    print("j=", j)
                     bit= mat [i][j] 
                     bloc.append(bit)
                     cpt+=1
@@ -347,7 +338,7 @@ def filtres(mat):
     #filtre tout noir
     if pix1 == 0 and pix2 == 0:
         filtre = [[0]*25] * 25
-        application_filtre()
+        application_filtre(mat)
 
     #damier
     elif pix1 == 0 and pix2 == 1:
@@ -359,25 +350,25 @@ def filtres(mat):
             else:
                 liste = [1,0,1,0]*6 +[1]
                 filtre.append(liste)
-        application_filtre()
+        application_filtre(mat)
 
     #filtre avec alternance lignes horizontales noires et lignes blanches            
     elif pix1 == 1 and pix2 == 0:
         filtre = [[0]*25, [1]*25] * 12 + [[0]*25]
-        application_filtre()
+        application_filtre(mat)
 
     #filtre avec alternance lignes verticales noires et lignes blanches
     elif pix1 == 1 and pix2 == 1:
         filtre = [[0,1,0,1]*6 +[0]] * 25
-        application_filtre()
+        application_filtre(mat)
 
 def application_filtre(mat):
     """Fonction qui permet d'appliquer le filtre en faisant 
     un XOR entre les pixels du filtre et ceux du QR code"""
-    res = []
+    res = [[0]*25] * 25
     for i in range(25):
         for j in range(25):
-            res.append(mat[i][j] ^ filtre[i][j])
+            res[i][j] = (mat[i][j]) ^ (filtre[i][j])
     saving(res, "filtre.png")
     return res
 
@@ -385,7 +376,7 @@ def application_filtre(mat):
 def nbr_de_blocs(mat):
     liste = [mat[13][0],mat[14][0],mat[15][0],mat[16][0],mat[17][0]]
     nb_blocs = conversionEntier(liste)
-    #print("Le nommbre de blocs à décoder est" + nb_blocs)
+    print("Le nombre de blocs à décoder est", nb_blocs)
     return nb_blocs
 
 def conversionEntier(liste):
@@ -401,7 +392,9 @@ def conversionEntier(liste):
 # programme principal
 #print(trouver_lignes())
 trouver_coin()
-print(lecture_bloc(mat))
+filtres(mat)
+lecture_bloc(mat)
 decoupage_liste(grande_liste)
 recuperer_messages(liste_7_bits)
 type_de_donnees(message)
+nbr_de_blocs(mat)
