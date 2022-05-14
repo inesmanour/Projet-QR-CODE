@@ -174,7 +174,10 @@ def lecture_bloc(mat):
             lecture_droite_gauche(mat)
         else:
             lecture_gauche_droite(mat)
-    return grande_liste
+
+    decoupage_liste(grande_liste)
+    recuperer_messages(liste_7_bits)
+    type_de_donnees(message)
    
 
 def lecture_droite_gauche(mat): 
@@ -434,17 +437,16 @@ def conversionEntier(liste):
 
 
 
-## programme principal: 
+##programme principal: 
 
-# choix du QR code à lire
+#choix du QR code à lire
 image_courante= "qr_code_ssfiltre_ascii_rotation.png"
 
-# appel des différentes fonctions pour lire un QR code
+#vérifier que le QR code est dans le bon sens
 trouver_lignes()
-#trouver_coin()
-filtres(mat)
+trouver_coin()
+#application du filtre pour avoir une image plus nette
+filtres(mat) #essayer d'appliquer les filtres dans la fonction trouver coin!!!!!!!!!!!!!!!!!!!!!
+#lecture du QR code
 lecture_bloc(mat)
-decoupage_liste(grande_liste)
-recuperer_messages(liste_7_bits)
-type_de_donnees(message)
 nbr_de_blocs(mat)
