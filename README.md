@@ -19,6 +19,7 @@ Lien du github : https://github.com/uvsq22103405/Projet-QR-CODE.git
 °°°Explication et détails du programme : 
 
 *Structure générale : 
+
 	-Import des librairies 
 	
 	-Définition des fonctions 
@@ -31,66 +32,66 @@ Lien du github : https://github.com/uvsq22103405/Projet-QR-CODE.git
 	"""Fonction qui renvoie le nombre de colonnes d'une matrice"""
 
 	-def nbrLig( ):
-"""Fonction qui renvoie le nombre de lignes d'une matrice »""
+	"""Fonction qui renvoie le nombre de lignes d'une matrice »""
 
 	-def saving():
-"""Fonction qui sauvegarde l'image contenue dans matpix dans le fichier filename . Il faut 
+	"""Fonction qui sauvegarde l'image contenue dans matpix dans le fichier filename . Il faut 
     utiliser une extension png pour que la fonction fonctionne sans perte d'information"""
 
 	-def loading():
- """Fonction qui charge le fichier image filename et renvoie une 
+	"""Fonction qui charge le fichier image filename et renvoie une 
     matrice de 0 et de 1 qui représente l'image en noir et blanc"""
 
 	-def rotate_gauche():
- ""Fonction qui permet de faire une rotation de 90° à gauche """
+	""Fonction qui permet de faire une rotation de 90° à gauche """
 
 	-def carre_de_base():
- """Matrice de pixels qui crée un carré noir de 3x3 pixels enrouré d'une bande 
+	"""Matrice de pixels qui crée un carré noir de 3x3 pixels enrouré d'une bande 
     blanche entourée d'une bande noire entourée d'une bande blanche à droite et en bas s"""
 
 	-def trouver_coin():
- """Fonction qui trouve le coin dans lequel le carre_de_base n'apparait 
+	"""Fonction qui trouve le coin dans lequel le carre_de_base n'apparait 
     pas et retourne l'image pour avoir les 3 carrés dans les bons coins"""
 
 	-def trouver_lignes():
- """Fonction qui vérifie que les 2 lignes qui relient
+	"""Fonction qui vérifie que les 2 lignes qui relient
     les carrés des 3 coins apparaisent bien """
 
 	-def lecture_bloc():  
- """ Fonction qui parcourt l’image d’un QR code pour renvoyer 
+	""" Fonction qui parcourt l’image d’un QR code pour renvoyer 
     l’information lue sous la forme d’une liste de listes de 14 bits"""
 
 	-def lecture_droite_gauche():
- """Fonction pour lire les blocs de droite à gauche""
+	"""Fonction pour lire les blocs de droite à gauche""
 
 	-def lecture_gauche_droite():
-"""Fonction pour lire les blocs de gauche à droite ""
+	"""Fonction pour lire les blocs de gauche à droite ""
 
-	-def decoupage_liste( )
-"" Fonction qui permet de découper la liste des blocs lus (14 bits) en deux listes de 7 blocs pour pouvoir appliquer le code Hamming (7,4) par la suite """
+	-def decoupage_liste( ):
+	"" Fonction qui permet de découper la liste des blocs lus (14 bits) en deux listes de 7 blocs pour pouvoir appliquer le code Hamming (7,4) par la 		suite """
 
 	-def decoder_Hamming( ) :
- ""Fonction qui prend en entrée une liste de 7 bits ( 4 bits de message + 3 bits de correction) et qui renvoie les 4 bits de message de correction ""
+	""Fonction qui prend en entrée une liste de 7 bits ( 4 bits de message + 3 bits de correction) et qui renvoie les 4 bits de message de correction""
 
 	-def recuperer_messages( ) :
- ""Fonction qui récupère les 4 bits de messages après correction s’il a une erreur ""
+	""Fonction qui récupère les 4 bits de messages après correction s’il a une erreur ""
 
 	-def type_de_donnees():
 
 	-def filtres():
- """Fonction qui choisit le filtre en fonction 
+	"""Fonction qui choisit le filtre en fonction 
     des bits de contrôle et applique le filtre"""
 
 	-def application_filtre():
- """Fonction qui permet d'appliquer le filtre en faisant 
+	"""Fonction qui permet d'appliquer le filtre en faisant 
     un XOR entre les pixels du filtre et ceux du QR code"""
 
 
 	-def nbr_de_blocs():
-"" Fonction qui permet de stocker le nombre de blocs à décoder"""
+	"" Fonction qui permet de stocker le nombre de blocs à décoder"""
 
 	-def conversionEntier():
-""Fonction qui permet de convertir une liste de bits (binaire) en décimal """
+	""Fonction qui permet de convertir une liste de bits (binaire) en décimal """
 
 
 
