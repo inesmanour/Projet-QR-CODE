@@ -95,7 +95,7 @@ Lien du github : https://github.com/uvsq22103405/Projet-QR-CODE.git
 
 
 
-Signature: Ce programme a été réalisé par Sofia Terki et Inès Manour dans le cadre d’un projet du module IN202 . 14/05/22
+Signature: Ce programme a été réalisé par Sofia Terki et Inès Manour dans le cadre d’un projet du module IN202. 14/05/22
 
 
 
