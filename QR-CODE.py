@@ -15,10 +15,9 @@ from tkinter import filedialog
 from tkinter import simpledialog
 
 
-carre = []
-image_courante= "qr_code_ssfiltre_ascii_rotation.png"
+## création des fifférentes fonctions
 
-
+#fonctions de base vues en cours
 def nbrCol(matrice):
     """Fonction qui renvoie le nombre de colonnes d'une matrice"""
     return len(matrice[0])
@@ -59,6 +58,7 @@ def rotate_gauche(matrice):
    return mat_res 
 
 
+#fonctions crées pour la lecture des QR code
 
 def carre_de_base():
     """Matrice de pixels qui crée un carré noir de 3x3 pixels 
@@ -76,7 +76,6 @@ def carre_de_base():
              0, 1, 1, 1, 1, 1, 0,
              0, 0, 0, 0, 0, 0, 0]
     return carre
-
 
 
 def trouver_coin():
@@ -117,8 +116,7 @@ def trouver_coin():
     saving(bon_qr_code, "photo.png")
     return bon_qr_code
     
-    
-    
+
 def trouver_lignes():
     """Fonction qui vérifie que les 2 lignes qui relient
     les carrés des 3 coins apparaisent bien """
@@ -178,7 +176,6 @@ def lecture_bloc(mat):
             lecture_gauche_droite(mat)
     return grande_liste
    
-
 
 def lecture_droite_gauche(mat): 
     """Fonction pour lire les blocs de droite à gauche"""
@@ -241,7 +238,6 @@ def lecture_droite_gauche(mat):
     serie += 1  
     
     
-
 def lecture_gauche_droite(mat):
     """Fonction pour lire les blocs de gauche à droite"""
     global serie, cpt, grande_liste, bloc, i, j 
@@ -301,6 +297,7 @@ def lecture_gauche_droite(mat):
 
     # une fois que deux blocs ont été lus
     serie+=1
+
 
 def decoupage_liste(grande_liste):
     """Fonction qui permet de découper la liste des blocs 
@@ -436,8 +433,13 @@ def conversionEntier(liste):
     return res
 
 
-###########################################################################
-# programme principal
+
+## programme principal: 
+
+# choix du QR code à lire
+image_courante= "qr_code_ssfiltre_ascii_rotation.png"
+
+# appel des différentes fonctions pour lire un QR code
 trouver_lignes()
 #trouver_coin()
 filtres(mat)
