@@ -1,5 +1,6 @@
 # Projet-QR-CODE
 ######################
+
 Chargé de TD: Coline Gianfrotta
 
 
@@ -27,6 +28,7 @@ Lien du github : https://github.com/uvsq22103405/Projet-QR-CODE.git
 
 
 °°°Explication et détails du programme : 
+
 
 **Structure générale : 
 
@@ -102,6 +104,8 @@ Lien du github : https://github.com/uvsq22103405/Projet-QR-CODE.git
 
 	-def conversionEntier():
 	""Fonction qui permet de convertir une liste de bits (binaire) en décimal """
+	
+	
 	
 	
 	
