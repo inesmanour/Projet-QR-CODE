@@ -151,7 +151,172 @@ def trouver_lignes():
     return qr_code
 
 ########################################################################
+# on a essayé d'utiliser la fonction nombre de blocs pour ne lire qu'un certain 
+# nombre de blocs mais ça ne marche pas donc on a gardé la fonction qui lit 16 blocs qui est plus bas
+"""def lecture_bloc(mat):  
+    """ Fonction qui parcourt l’image d’un QR code pour renvoyer 
+    l’information lue sous la forme d’une liste de listes de 14 bits"""
 
+    global grande_liste, cpt, liste_bloc, bloc, i , j, condition
+    #compteur du nombre de blocs lus
+    bloc = 0
+    # liste qui va contenir 14 bits
+    liste_bloc = []    
+    #liste contenant les sous listes de 14 bits
+    grande_liste=[]  
+    #variable qui compte le nombre de bits lus
+    cpt=0
+
+    # initialiser à 24 pour démarrer la lecture en bas a droite
+    i=25     
+    j=24 
+
+    # nombre de blocs qu'il faut lire
+    nb_blocs_exact = nbr_de_blocs(qr_code_filtre)
+    if (nb_blocs_exact // 2) % 2 == 0:
+        condition = True
+    else:
+        condition = False
+
+    while bloc < 16: #pour lire au maximum 8 séries de 2 blocs
+        if bloc % 4 == 0:
+            lecture_droite_gauche(mat)
+        else:
+            lecture_gauche_droite(mat)
+
+    decoupage_liste(grande_liste)
+    recuperer_messages(liste_7_bits)
+    type_de_donnees(message)"""
+   
+
+"""def lecture_droite_gauche(mat): 
+    """Fonction pour lire les blocs de droite à gauche"""
+    global cpt, grande_liste, liste_bloc,i, j, condition, bloc  
+    for k in range (2):
+        # lecture premier bloc de 7 bit)
+        if k==0 :
+            #ajout du 1er bit
+            i = i-1    
+            liste_bloc.append(mat[i][j])
+            cpt+=1
+            while cpt <14: 
+                # ajout des 13 prochains bits de ma sous liste de 14 bits 
+                if cpt%2 != 0:  
+                    # mouvement en haut             
+                    i=i-1                      
+                    bit= mat [i][j] 
+                    liste_bloc.append(bit)
+                    cpt+=1
+                else:
+                    # mouvment en bas
+                    i=i+1    
+                    # puis mouvement a gauche                 
+                    j=j-1
+                    bit = mat [i][j]
+                    liste_bloc.append(bit) 
+                    cpt+=1  
+            
+            # ajout de la sous liste de 14 bits = un bloc
+            grande_liste.append(liste_bloc)
+            # un bloc en plus a été lu
+            bloc+=1    
+            # réinitialisation de la liste bloc et du compteur de bits         
+            liste_bloc = []
+            cpt = 0
+            
+        # lecture du second bloc
+        else:   
+            if condition == True:
+                break
+            else:
+                while cpt<14:
+                    if cpt%2 == 0:
+                        # mouvement en bas
+                        i=i+1                    
+                        bit= mat [i][j] 
+                        liste_bloc.append(bit)
+                        cpt+=1
+                    else:
+                        # mouvement en haut
+                        i=i-1  
+                        # puis mouvement a gauche                   
+                        j=j-1
+                        bit = mat [i][j]
+                        liste_bloc.append(bit)
+                        cpt+=1   
+
+                # ajout de sous liste de 14 bits = une bloc
+                grande_liste.append(liste_bloc)    
+                # réinitialisation de la liste bloc et du compteur de bits
+                liste_bloc = []
+                cpt = 0
+                # une fois que un bloc a été lu
+                bloc += 1  """
+    
+    
+"""def lecture_gauche_droite(mat):
+    """Fonction pour lire les blocs de gauche à droite"""
+    global cpt, grande_liste, liste_bloc, bloc, i, j 
+
+    for k in range (2):
+        # lecture du premier bloc
+        if k==0:  
+            # ajout du 1er bit
+            i = i-1    
+            liste_bloc.append(mat[i][j])
+            cpt+=1
+            while cpt<14:
+                # ajout des 13 prochains bits de ma sous liste de 14 bits  
+                if cpt%2 != 0:   
+                    i = i-1    
+                    liste_bloc.append(mat[i][j])
+                    cpt+=1 
+                else:     
+                    # mouvment en bas 
+                    i=i+1                     
+                    # puis mouvement à droite
+                    j=j+1    
+                    bit= mat [i][j] 
+                    liste_bloc.append(bit)
+                    cpt+=1
+            
+            # ajout de la sous liste de 14 bits = un bloc
+            grande_liste.append(liste_bloc)
+            # un bloc en plus a été lu
+            bloc+=1
+            # réinitialisation de la liste bloc et du compteur de bits
+            liste_bloc = []
+            cpt = 0
+
+        # lecture du deuxieme bloc
+        else :   
+            if condition == False:
+                break
+            else:
+                while cpt <14:
+                    #ajout des 13 prochains bits
+                    if cpt%2 == 0:    
+                        i = i-1    
+                        liste_bloc.append(mat[i][j])
+                        cpt+=1    
+                    else:  
+                        # mouvment en bas
+                        i=i+1 
+                        # puis mouvement à droite                     
+                        j=j+1    
+                        bit= mat [i][j] 
+                        liste_bloc.append(bit)
+                        cpt+=1
+            
+                # ajout de la sous liste de 14 bits = une bloc
+                grande_liste.append(liste_bloc)
+                # un boc en plus a été lu
+                bloc+=1
+                # réinitialisation de la liste bloc et du compteur de bits
+                liste_bloc = []
+                cpt = 0"""
+
+########################################################################
 def lecture_bloc(mat):  
     """ Fonction qui parcourt l’image d’un QR code pour renvoyer 
     l’information lue sous la forme d’une liste de listes de 14 bits"""
