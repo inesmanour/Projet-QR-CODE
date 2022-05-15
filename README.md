@@ -1,5 +1,8 @@
 # Projet-QR-CODE
 ######################
+Chargé de TD: Coline Gianfrotta
+
+
 GROUPE LDDBI :
 
 MANOUR INES 
@@ -14,11 +17,18 @@ Lien du github : https://github.com/uvsq22103405/Projet-QR-CODE.git
 °°°Principe du projet : 
 
    Le projet consiste à programmer un lecteur de QR code 
+   
+   
+°°°Découpage du projet:
+	
+	On a découper en 3 branches le projet pour une meilleur communication et partage de nos idées de code. 
+	
+	La branche principal qui est le main est le résultat final de notre programmation, accompagné de branches nommées Sofia et Ines permettant d'y mettre nos débuts de recherches sans marcher l'une sur l'autre. 
 
 
 °°°Explication et détails du programme : 
 
-*Structure générale : 
+**Structure générale : 
 
 	-Import des librairies 
 	
@@ -26,7 +36,7 @@ Lien du github : https://github.com/uvsq22103405/Projet-QR-CODE.git
 	
 	-Programme principal
 
-*Details et explications des fonctions : 
+**Details et explications des fonctions : 
 
 	-def nbrCol():
 	"""Fonction qui renvoie le nombre de colonnes d'une matrice"""
@@ -92,6 +102,12 @@ Lien du github : https://github.com/uvsq22103405/Projet-QR-CODE.git
 
 	-def conversionEntier():
 	""Fonction qui permet de convertir une liste de bits (binaire) en décimal """
+	
+	
+	
+°°°Problèmes rencontrés:
+		
+		on a essayé d'utiliser la fonction nombre de blocs pour ne lire qu'un certain nombre de blocs mais cela ne marche pas , nous avons donc gardé la fonction qui lit 16 blocs qui est visible plus bas dans le code 
 
 
 
