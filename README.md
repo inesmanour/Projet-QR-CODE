@@ -112,7 +112,8 @@ Lien du github : https://github.com/uvsq22103405/Projet-QR-CODE.git
 	
 °°°Problèmes rencontrés:
 		
-		on a essayé d'utiliser la fonction nombre de blocs pour ne lire qu'un certain nombre de blocs mais cela ne marche pas , nous avons donc gardé la fonction qui lit 16 blocs qui est visible plus bas dans le code 
+		-on a essayé d'utiliser la fonction nombre de blocs pour ne lire qu'un certain nombre de blocs mais cela ne marche pas , nous avons donc gardé la fonction qui lit 16 blocs qui est visible plus bas dans le code 
+		- Lorsque nous essayons de décoder Le QR  code il ne contient pas une suite de valeurs hexadecimales qui commence par 14BAD mais par d'autre valeurs hexadecimales.
 
 
 
