@@ -13,6 +13,7 @@ from PIL import Image
 from PIL import ImageTk 
 from tkinter import filedialog
 from tkinter import simpledialog
+from operator import xor
 
 
 ## création des différentes fonctions
@@ -378,7 +379,7 @@ def type_de_donnees(message):
 def filtres(mat):
     """Fonction qui choisit le filtre en fonction 
     des bits de contrôle et applique le filtre"""
-    global res
+    global qr_code_filtre
 
     pix1 = mat[22][8]
     pix2 = mat[23][8]
@@ -386,6 +387,7 @@ def filtres(mat):
     #filtre tout noir
     if pix1 == 0 and pix2 == 0:
         filtre = [[0]*25] * 25
+        print("filtre tout noir")
 
     #damier
     elif pix1 == 0 and pix2 == 1:
@@ -397,23 +399,33 @@ def filtres(mat):
             else:
                 liste = [1,0,1,0]*6 +[1]
                 filtre.append(liste)
+        print("dammier")
+    
 
     #filtre avec alternance lignes horizontales noires et lignes blanches            
     elif pix1 == 1 and pix2 == 0:
         filtre = [[0]*25, [1]*25] * 12 + [[0]*25]
+        print("lignes horizontales")
 
     #filtre avec alternance lignes verticales noires et lignes blanches
     elif pix1 == 1 and pix2 == 1:
         filtre = [[0,1,0,1]*6 +[0]] * 25
+        print("lignes verticales")
     
-    #application du filtre en faisant un XOR entre 
-    #les pixels du filtre et ceux du QR code 
-    res = [[0]*25] * 25
+    
+    # création de la liste qui contiendra les bits résultant du xor entre le QR code et le filtre
+    qr_code_filtre = []
+    for i in range (25):
+        qr_code_filtre.append([0]*25)
+
+    #application du filtre en faisant un XOR entre les pixels du filtre et ceux du QR code 
     for i in range(25):
         for j in range(25):
-            res[i][j] = (mat[i][j]) ^ (filtre[i][j])
-    saving(res, "filtre.png")
-    return res
+            qr_code_filtre[i][j] = (mat[i][j]) ^ (filtre[i][j])
+
+    #saving(res, "filtre.png")
+    print ("res=", qr_code_filtre)
+    return qr_code_filtre
 
 ###########################################################################
 def nbr_de_blocs(mat):
@@ -448,5 +460,7 @@ trouver_coin()
 #application du filtre pour avoir une image plus nette
 filtres(mat) #essayer d'appliquer les filtres dans la fonction trouver coin!!!!!!!!!!!!!!!!!!!!!
 #lecture du QR code
-lecture_bloc(mat)
-nbr_de_blocs(mat)
+lecture_bloc(qr_code_filtre)
+nbr_de_blocs(qr_code_filtre)
+
+
