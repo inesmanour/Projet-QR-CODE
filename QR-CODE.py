@@ -13,7 +13,7 @@ from PIL import Image
 from PIL import ImageTk 
 from tkinter import filedialog
 from tkinter import simpledialog
-from operator import xor
+
 
 
 ## création des différentes fonctions
@@ -154,8 +154,8 @@ def trouver_lignes():
 # on a essayé d'utiliser la fonction nombre de blocs pour ne lire qu'un certain 
 # nombre de blocs mais ça ne marche pas donc on a gardé la fonction qui lit 16 blocs qui est plus bas
 """def lecture_bloc(mat):  
-    """ Fonction qui parcourt l’image d’un QR code pour renvoyer 
-    l’information lue sous la forme d’une liste de listes de 14 bits"""
+    # Fonction qui parcourt l’image d’un QR code pour renvoyer 
+    #l’information lue sous la forme d’une liste de listes de 14 bits
 
     global grande_liste, cpt, liste_bloc, bloc, i , j, condition
     #compteur du nombre de blocs lus
@@ -190,7 +190,7 @@ def trouver_lignes():
    
 
 """def lecture_droite_gauche(mat): 
-    """Fonction pour lire les blocs de droite à gauche"""
+    #Fonction pour lire les blocs de droite à gauche
     global cpt, grande_liste, liste_bloc,i, j, condition, bloc  
     for k in range (2):
         # lecture premier bloc de 7 bit)
@@ -215,7 +215,6 @@ def trouver_lignes():
                     bit = mat [i][j]
                     liste_bloc.append(bit) 
                     cpt+=1  
-            
             # ajout de la sous liste de 14 bits = un bloc
             grande_liste.append(liste_bloc)
             # un bloc en plus a été lu
@@ -223,7 +222,6 @@ def trouver_lignes():
             # réinitialisation de la liste bloc et du compteur de bits         
             liste_bloc = []
             cpt = 0
-            
         # lecture du second bloc
         else:   
             if condition == True:
@@ -244,20 +242,18 @@ def trouver_lignes():
                         bit = mat [i][j]
                         liste_bloc.append(bit)
                         cpt+=1   
-
                 # ajout de sous liste de 14 bits = une bloc
                 grande_liste.append(liste_bloc)    
                 # réinitialisation de la liste bloc et du compteur de bits
                 liste_bloc = []
                 cpt = 0
                 # une fois que un bloc a été lu
-                bloc += 1  """
+                bloc += 1"""
     
     
 """def lecture_gauche_droite(mat):
-    """Fonction pour lire les blocs de gauche à droite"""
+    #Fonction pour lire les blocs de gauche à droite
     global cpt, grande_liste, liste_bloc, bloc, i, j 
-
     for k in range (2):
         # lecture du premier bloc
         if k==0:  
@@ -497,16 +493,16 @@ def decoder_Hamming(bits):
     #d'un bit de message on corrige
     if (num == 3):
         bits[0] = int (not bits[0])
-        #print("correction d'un pixel corrompu 1\n")
+        print("correction d'un pixel corrompu 1\n")
     if (num == 5):
         bits[1] = int (not bits[1])
-        #print("correction d'un pixel corrompu 2\n")
+        print("correction d'un pixel corrompu 2\n")
     if (num == 6):
         bits[2] = int (not bits[2])
-        #print("correction d'un pixel corrompu 3\n")
+        print("correction d'un pixel corrompu 3\n")
     if (num == 7):
         bits[3] = int (not bits[3])
-        #print("correction d'un pixel corrompu 4\n")
+        print("correction d'un pixel corrompu 4\n")
     return bits[:4]
 
 def recuperer_messages(liste_7_bits):
@@ -522,12 +518,18 @@ def recuperer_messages(liste_7_bits):
 
 ##################################################################
 def type_de_donnees(message):
+    """Fonction qui permet de déterminer le type de données (numériques ou brutes) 
+    et de convertir les bits en Hexadécimal ou en ASCII"""
     pix = mat[24][8]
     donnees = []
     liste = []
+    # conversion en Hexadécimal
     if pix == 0:
-        for elem in message:  
-            donnees.append(hex(int(elem, 2)))  
+        for elem in message: 
+            binaire = ("".join(map(str,elem)))
+            hexstr = f'{int(binaire, 2):X}'    # méthode trouvée sur internet
+            donnees.append(hexstr)
+    # conversion en ASCII  
     elif pix == 1:
         k = 0
         while k < nbrLig(message):
@@ -536,7 +538,8 @@ def type_de_donnees(message):
             k+=2
         for elem in liste:
             donnees.append(chr(conversionEntier(elem)))
-    print("données=", donnees)
+    print("L'information stockée dans le QR code est:", " ".join(donnees))
+
 
 
 
@@ -588,8 +591,7 @@ def filtres(mat):
         for j in range(25):
             qr_code_filtre[i][j] = (mat[i][j]) ^ (filtre[i][j])
 
-    #saving(res, "filtre.png")
-    print ("res=", qr_code_filtre)
+    
     return qr_code_filtre
 
 ###########################################################################
@@ -613,11 +615,10 @@ def conversionEntier(liste):
     return res
 
 
-
 ##programme principal: 
 
 #choix du QR code à lire
-image_courante= "qr_code_ssfiltre_ascii_rotation.png"
+image_courante= "qr_code_ssfiltre_num.png"
 
 #vérifier que le QR code est dans le bon sens
 trouver_lignes()
@@ -625,7 +626,8 @@ trouver_coin()
 #application du filtre pour avoir une image plus nette
 filtres(mat) #essayer d'appliquer les filtres dans la fonction trouver coin!!!!!!!!!!!!!!!!!!!!!
 #lecture du QR code
-lecture_bloc(qr_code_filtre)
 nbr_de_blocs(qr_code_filtre)
+lecture_bloc(qr_code_filtre)
+
 
 
