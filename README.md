@@ -89,6 +89,7 @@ Lien du github : https://github.com/uvsq22103405/Projet-QR-CODE.git
 	""Fonction qui récupère les 4 bits de messages après correction s’il a une erreur ""
 
 	-def type_de_donnees():
+	""Fonction qui permet de determiner le type de donées (numériques ou brutes ) et de convertir les bits en hexadecimal ou ASCII""
 
 	-def filtres():
 	"""Fonction qui choisit le filtre en fonction 
